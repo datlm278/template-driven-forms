@@ -1,0 +1,76 @@
+<h2 class="text-center">Angular Template-driven forms</h2>
+<form novalidate (submit)="onSubmit(form)" #form="ngForm" class="row justify-content-md-center">
+  <div class="col-md-8">
+    <div class="mb-3 col-md-4">
+      <label for="contactName" class="form-label">Name</label>
+      <input type="text" class="form-control" id="contactName"
+             #contactName= "ngModel"
+             [(ngModel)]="contact.contactName"
+             name="contactName"
+             minlength="8" required>
+      <div *ngIf="contactName.invalid && (contactName.dirty || contactName.touched)">
+        <div *ngIf="contactName.errors?.['required']">
+          <span class="is-invalid form-text">Name is required</span>
+        </div>
+        <div *ngIf="contactName.errors?.['minlength']">
+          <p class="is-invalid form-text">Name must be at least 8 characters long</p>
+        </div>
+      </div>
+    </div>
+    <div class="mb-3 col-md-4">
+      <label for="email" class="form-label">Email</label>
+      <input type="email" class="form-control" id="email" #email="ngModel"
+             [(ngModel)] = "contact.email" name="email"
+             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" required>
+      <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+      <div *ngIf="email.invalid && (email.dirty || email.touched)">
+        <div *ngIf="email.errors?.['required']">
+          <span class="is-invalid form-text">Email is required</span>
+        </div>
+        <div *ngIf="email.errors?.['pattern']">
+          <span class="is-invalid form-text">Email is not in the correct format</span>
+        </div>
+      </div>
+    </div>
+    <div class="mb-3 col-md-4">
+      <label for="address" class="form-label">Address</label>
+      <input type="text" class="form-control" id="address" [(ngModel)]="contact.address" name="address"
+             #address="ngModel"
+             required>
+      <div *ngIf="address.invalid && (address.dirty || address.touched)">
+        <div *ngIf="address.errors?.['required']">
+          <span class="is-invalid form-text">Address is required</span>
+        </div>
+      </div>
+    </div>
+    <div class="mb-3 col-md-4">
+      <label for="city" class="form-label">City</label>
+      <select id="city" class="form-select"
+              [(ngModel)]="contact.city" name="city"
+              #city="ngModel" required>
+        <option value="" disabled selected>Choose a city in menu</option>
+        <option value="1">Hà Nội</option>
+        <option value="2">Hồ Chí Minh</option>
+        <option value="3">Sài Gòn</option>
+      </select>
+      <div *ngIf="city.invalid && (city.dirty || city.touched)">
+        <div *ngIf="city.errors?.['required']">
+          <span class="is-invalid form-text">City has not been selected</span>
+        </div>
+      </div>
+    </div>
+    <div class="mb-3 col-md-4">
+      <div class="form-check form-switch">
+        <label class="form-check-label" for="statusSwitch">Status</label>
+        <input class="form-check-input" role="switch" type="checkbox" id="statusSwitch" [(ngModel)]="contact.status" name="status">
+      </div>
+    </div>
+    <button [disabled]="form.form.invalid"
+            type="submit" class="btn btn-primary">Submit</button>
+  </div>
+
+</form>
+<!--<p>Forms value:</p>-->
+<!--<pre>{{form.value | json}}</pre>-->
+<!--<p>Form control:</p>-->
+<!--<pre>{{contactName.errors | json}}</pre>-->
